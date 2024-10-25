@@ -1,22 +1,45 @@
-public class MindfulnessActivity
+using System;
+using System.Threading;
+
+public abstract class MindfulnessActivity
 {
-    protected string Name { get; set; }
-    protected string Description { get; set; }
-    protected int Duration { get; set; }
+    protected string name;
+    protected string description;
+    protected int duration;
+
+    public MindfulnessActivity(string name, string description)
+    {
+        this.name = name;
+        this.description = description;
+    }
 
     public void StartActivity()
     {
-        Console.WriteLine($"Activity: {Name}");
-        Console.WriteLine(Description);
-        Console.WriteLine("How many seconds would you like to dedicate to this activity?");
-        Duration = int.Parse(Console.ReadLine());
-        Console.WriteLine("Get ready...");
-        Thread.Sleep(3000);
+        Console.WriteLine($"Starting {name}");
+        Console.WriteLine(description);
+        Console.Write("Enter duration in seconds: ");
+        duration = int.Parse(Console.ReadLine());
+        Console.WriteLine("Prepare to begin...");
+        Pause(3);
     }
 
-    public void EndActivity()
+    protected void EndActivity()
     {
-        Console.WriteLine("Great job! You've completed the activity.");
-        Thread.Sleep(3000);
+        Console.WriteLine("Good job! You have completed the activity.");
+        Console.WriteLine($"You spent {duration} seconds on this activity.");
+        Pause(3);
     }
+
+    protected void Pause(int seconds)
+    {
+        for (int i = 0; i < seconds; i++)
+        {
+            Console.Write(".");
+            Thread.Sleep(1000);
+        }
+        Console.WriteLine();
+    }
+
+    // Define Run as an abstract method
+    public abstract void Run();
 }

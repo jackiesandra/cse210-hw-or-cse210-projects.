@@ -1,23 +1,25 @@
-public class BreathActivity : MindfulnessActivity
+using System;
+
+public class BreathingActivity : MindfulnessActivity
 {
-    public BreathActivity()
+    public BreathingActivity() : base("Breathing Activity", 
+        "This activity will help you relax by walking you through breathing in and out slowly. Clear your mind and focus on your breathing.")
     {
-        Name = "Breath Activity";
-        Description = "This activity will help you relax while inhaling and exhaling slowly.";
     }
 
-    public void Execute()
+    public override void Run()
     {
         StartActivity();
+        int timeSpent = 0;
 
-        for (int i = 0; i < Duration; i++)
+        while (timeSpent < duration)
         {
-            Console.WriteLine("Inhale...");
-            Thread.Sleep(5000);
-            Console.WriteLine("Exhale...");
-            Thread.Sleep(5000);
+            Console.WriteLine("Breathe in...");
+            Pause(4);
+            Console.WriteLine("Breathe out...");
+            Pause(4);
+            timeSpent += 8; // 4 seconds for each breath
         }
-
         EndActivity();
     }
 }

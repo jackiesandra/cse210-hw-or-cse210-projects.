@@ -1,21 +1,40 @@
+using System;
+
 public class ListingActivity : MindfulnessActivity
 {
-    public ListingActivity()
+    private string[] prompts = {
+        "Who are people that you appreciate?",
+        "What are personal strengths of yours?",
+        "Who are people that you have helped this week?",
+        "When have you felt the Holy Ghost this month?",
+        "Who are some of your personal heroes?"
+    };
+
+    public ListingActivity() : base("Listing Activity", 
+        "This activity will help you reflect on the good things in your life by having you list as many things as you can.")
     {
-        Name = "Listing Activity";
-        Description = "This activity will help you reflect on the good things in your life by listing as many as you can.";
     }
 
-    public void Execute()
+    public override void Run()
     {
         StartActivity();
+        Random random = new Random();
+        string prompt = prompts[random.Next(prompts.Length)];
+        Console.WriteLine(prompt);
+        Pause(3);
 
-        Console.WriteLine("Who are the people you appreciate?");
-        Thread.Sleep(5000); // Time to think
+        Console.WriteLine("Start listing items (type 'done' to finish):");
+        int count = 0;
+        string input;
+        DateTime endTime = DateTime.Now.AddSeconds(duration);
 
-        // Logic to allow user to input items can be added here
-        // Example: Count and display the number of items
-
+        while (DateTime.Now < endTime)
+        {
+            input = Console.ReadLine();
+            if (input.ToLower() == "done") break;
+            count++;
+        }
+        Console.WriteLine($"You listed {count} items.");
         EndActivity();
     }
 }
